@@ -17,7 +17,9 @@ class App extends React.Component {
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
             {/* create a search view */}
-            <Search />
+            {/* pass in callback function to process search */}
+            {/* for callback function, es6 arrow function or bind required to keep App scope */}
+            <Search cb={query => this.search(query)}/>
           </div>
         </nav>
         <div className="row">
@@ -28,8 +30,8 @@ class App extends React.Component {
           <div className="col-md-5">
             {/* create a video list, pass in the list of videos from state */}
             {/* and also pass in a callback function to handle mouseclicks in list entries */}
-            {/* for callback function, es6 arrow function or bind required to keep App lexical scope */}
-            <VideoList videos={this.state.videos} select={(video) => this.select(video)} />
+            {/* for callback function, es6 arrow function or bind required to keep App scope */}
+            <VideoList videos={this.state.videos} select={video => this.select(video)}/>
           </div>
         </div>
       </div>
@@ -40,7 +42,23 @@ class App extends React.Component {
     //change video in state using the video passed in
     //when selected video is changed in state App will automatically rerender
     this.setState({
-      selected:video
+      selected: video
+    });
+  }
+
+  search(query) {
+    //call searchYouTube passing in a query and a callback
+    //callback must be in an ES6 arrow function to keep App scope
+    searchYouTube({query}, data => this.completeSearch(data));
+  }
+
+  completeSearch(videos) {
+    //callback for when search data is recieved
+    //set videos and selected in state to new data
+    //App will automatically rerender the new data
+    this.setState({
+      videos: videos,
+      selected: videos[0]
     });
   }
 }
