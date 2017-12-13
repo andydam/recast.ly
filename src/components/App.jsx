@@ -2,6 +2,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      videos: window.exampleVideoData,
       selected: window.exampleVideoData[0]
     };
   }
@@ -19,7 +20,7 @@ class App extends React.Component {
             <VideoPlayer video={this.state.selected}/>
           </div>
           <div className="col-md-5">
-            <VideoList videos={window.exampleVideoData} select={this.select} />
+            <VideoList videos={this.state.videos} select={(video) => this.select(video)} />
           </div>
         </div>
       </div>
@@ -27,7 +28,9 @@ class App extends React.Component {
   }
 
   select(video) {
-    console.log(`${this.video.snippet.title} selected`);
+    this.setState({
+      selected:video
+    });
   }
 }
 
