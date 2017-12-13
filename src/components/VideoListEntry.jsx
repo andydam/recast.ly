@@ -1,11 +1,15 @@
 var VideoListEntry = (prop) => (
   <div className="video-list-entry media">
     <div className="media-left media-middle">
+      {/* pull the thumbnail url from video object passed from VideoList */}
       <img className="media-object" src={prop.video.snippet.thumbnails.default.url} alt="" />
     </div>
     <div className="media-body">
-      {/* create an onClick event handler that calls select function in app, must use ES6 arrow functions or bind to set proper scope */}
+      {/* pull video title from video object passed from VideoList */}
+      {/* create an onClick event handler on the video title that calls the App's select method passed down through VideoList */}
+      {/* must place method within an anonymous function to prevent method from automatically running */}
       <div className="video-list-entry-title" onClick={() => prop.select(prop.video)}>{prop.video.snippet.title}</div>
+      {/* pull video description from video object passed from VideoList */}
       <div className="video-list-entry-detail">{prop.video.snippet.description}</div>
     </div>
   </div>

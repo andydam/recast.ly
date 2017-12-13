@@ -1,10 +1,13 @@
 var VideoPlayer = (props) => (
   <div className="video-player">
     <div className="embed-responsive embed-responsive-16by9">
+      {/* pull video id from video object passed from App's state's selected video */}
       <iframe className="embed-responsive-item" src={`https://www.youtube.com/embed/${props.video.id.videoId}`} allowFullScreen></iframe>
     </div>
     <div className="video-player-details">
+      {/* pull video title from video object passed from App's state's selected video */}
       <h3>{props.video.snippet.title}</h3>
+      {/* pull video description from video object passed from App's state's selected video */}
       <div>{props.video.snippet.description}</div>
     </div>
   </div>
