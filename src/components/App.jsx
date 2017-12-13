@@ -11,6 +11,12 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    //invoked when App component is mounted (sucessfully loaded onto DOM)
+    //search for 'react' on youtube to get initial list of videos
+    this.search('reactjs');
+  }
+
   render() {
     return (
       <div>
