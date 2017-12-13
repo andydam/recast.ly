@@ -4,6 +4,7 @@ var VideoListEntry = (prop) => (
       <img className="media-object" src={prop.video.snippet.thumbnails.default.url} alt="" />
     </div>
     <div className="media-body">
+      {/* create an onClick event handler that calls select function in app, must use ES6 arrow functions or bind to set proper scope */}
       <div className="video-list-entry-title" onClick={() => prop.select(prop.video)}>{prop.video.snippet.title}</div>
       <div className="video-list-entry-detail">{prop.video.snippet.description}</div>
     </div>
