@@ -3,7 +3,7 @@ var VideoList = (props) => (
     {/* iterate through videos passed into list and create VideoListEntrys for each one */}
     {props.videos.map(video => 
       //pass through the App.select callback method to each VideoListEntry
-      <VideoListEntry video={video} select={props.select}/>
+      <VideoListEntry video={video} key={video.id.videoId} select={props.select}/>
     )}
   </div>
 );
