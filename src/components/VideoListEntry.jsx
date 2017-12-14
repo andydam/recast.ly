@@ -2,7 +2,8 @@ var VideoListEntry = (props) => (
   <div className="video-list-entry media">
     <div className="media-left media-middle">
       {/* pull the thumbnail url from video object passed from VideoList */}
-      <img className="media-object" src={props.video.snippet.thumbnails.default.url} alt="" />
+      {/* create an onClick event handler on the video img that calls the App's select method passed down through VideoList */}
+      <img className="media-object" src={props.video.snippet.thumbnails.default.url} alt="" onClick={() => props.select(props.video)} />
     </div>
     <div className="media-body">
       {/* pull video title from video object passed from VideoList */}

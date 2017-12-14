@@ -7,7 +7,9 @@ class App extends React.Component {
       //videos stores an array of YouTube video objects
       videos: [],
       //selected stores the selected YouTube video object
-      selected: { id: {videoId: ''}, snippet: {title: '', description: '', thumbnails: {default: {url: ''}}}}
+      selected: { id: {videoId: ''}, snippet: {title: '', description: '', thumbnails: {default: {url: ''}}}},
+      // holds value of search input
+      searchValue: ''
     };
   }
 
@@ -25,7 +27,7 @@ class App extends React.Component {
             {/* create a search view */}
             {/* pass in callback function to process search */}
             {/* for callback function, es6 arrow function or bind required to keep App scope */}
-            <Search cb={query => this.search(query)}/>
+            <Search search={query => this.search(query)} searchValue={this.state.searchValue} onType={event => this.searchBoxType(event)} onEnter={event => this.enterHandler(event)}/>
           </div>
         </nav>
         <div className="row">
@@ -52,8 +54,9 @@ class App extends React.Component {
     });
   }
 
-  search(query) {
+  search(query = this.state.searchValue) {
     //call searchYouTube passing in a query and a callback
+    //if no query passed, get query from search input field
     //callback must be in an ES6 arrow function to keep App scope
     searchYouTube({query}, data => this.completeSearch(data));
   }
@@ -66,6 +69,29 @@ class App extends React.Component {
       videos: videos,
       selected: videos[0]
     });
+  }
+
+  searchBoxType(event) {
+    //event handler for search box value changes
+    this.setState({
+      //set searchValue in state to new search box value
+      //updating searchValue will cause the search box to rerender with value changes
+      searchValue: event.target.value
+    })
+  }
+
+  enterHandler(event) {
+    //event handler for key presses
+    //check what key was pressed
+    if (event.key === 'Enter') {
+      //if the enter key was pressed, initiate a search
+      this.search();
+    } else {
+      //clear existing search timer if set
+      clearInterval(this.searchTimer);
+      //set a timer to initiate at search in 500ms
+      this.searchTimer = setTimeout(() => this.search(), 500);
+    }
   }
 }
 
