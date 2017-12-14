@@ -9,7 +9,9 @@ class App extends React.Component {
       //selected stores the selected YouTube video object
       selected: { id: {videoId: ''}, snippet: {title: '', description: '', thumbnails: {default: {url: ''}}}},
       // holds value of search input
-      searchValue: ''
+      searchValue: '',
+      //holds each comment
+      comments: []
     };
   }
 
@@ -34,6 +36,7 @@ class App extends React.Component {
           <div className="col-md-7">
             {/* create a video player, pass in the video selected from state */}
             <VideoPlayer video={this.state.selected}/>
+            <VideoCommList comments={this.state.comments}/>
           </div>
           <div className="col-md-5">
             {/* create a video list, pass in the list of videos from state */}
@@ -52,6 +55,8 @@ class App extends React.Component {
     this.setState({
       selected: video
     });
+    //gets comments from youtube api
+    getComments({videoId: video.id.videoId}, data => this.completeComments(data));
   }
 
   search(query = this.state.searchValue) {
@@ -66,9 +71,14 @@ class App extends React.Component {
     //set videos and selected in state to new data
     //App will automatically rerender the new data
     this.setState({
-      videos: videos,
-      selected: videos[0]
+      videos: videos
     });
+    this.select(videos[0]);
+  }
+
+  completeComments(data) {
+    //reset comments state
+    this.setState({comments: data});
   }
 
   searchBoxType(event) {
