@@ -5,9 +5,9 @@ class App extends React.Component {
     //when a state is changed, rerender happens
     this.state = {
       //videos stores an array of YouTube video objects
-      videos: window.exampleVideoData,
+      videos: [],
       //selected stores the selected YouTube video object
-      selected: window.exampleVideoData[0]
+      selected: { id: {videoId: ''}, snippet: {title: '', description: '', thumbnails: {default: {url: ''}}}}
     };
   }
 
